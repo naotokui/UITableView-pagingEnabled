@@ -49,8 +49,6 @@
         origin.y -= (self.tableView.bounds.size.height * 0.5 - targetRect.size.height * 0.5);
         
     }
-    
-
 
     if (row <= numberOfRow - 1 ){
         NSIndexPath *nextPath = [NSIndexPath indexPathForRow: row + 1 inSection: indexPath.section];
@@ -61,7 +59,6 @@
             selectedIndexPath = nextPath;
         }
     }
-    NSLog(NSStringFromCGPoint(origin));
     
     origin = targetRect.origin;
     if (self.centering){
