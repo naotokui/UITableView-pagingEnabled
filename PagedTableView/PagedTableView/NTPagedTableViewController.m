@@ -19,7 +19,7 @@
     [super viewDidLoad];
 
     self.tableView.decelerationRate = UIScrollViewDecelerationRateFast;
-    self.centering = YES;
+  //  self.centering = YES;
 }
 
 - (void)didReceiveMemoryWarning
