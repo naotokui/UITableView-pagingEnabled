@@ -13,76 +13,96 @@
 @end
 
 @implementation NTPagedTableViewController
+{
+    NSIndexPath *selectedIndexPath;
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
+    // You need to set pagingEnabled to NO in order to make -scrollViewWillEndDragging ... be called;
+    // table view just igonres pagingEnabled anyway.
+    self.tableView.pagingEnabled            = NO;
+    
+    // Make snapping fast
     self.tableView.decelerationRate = UIScrollViewDecelerationRateFast;
-  //  self.centering = YES;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+#pragma mark CORE LOGIC
 
-#pragma mark 
-
--(void)scrollViewWillEndDragging:(UIScrollView*)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint*)targetContentOffset {
-    NSIndexPath *selectedIndexPath;
-    
-    // Get index path for target row
-    CGPoint offset = (*targetContentOffset);
-    NSIndexPath* indexPath = [self.tableView indexPathForRowAtPoint:(*targetContentOffset)];
-    selectedIndexPath = indexPath;
-    
-    int row = indexPath.row;
+-(void)scrollViewWillEndDragging:(UIScrollView*)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint*)targetContentOffset {    
+    // Variables
+    CGPoint offset              = (*targetContentOffset);
+    NSIndexPath* indexPath      = [self.tableView indexPathForRowAtPoint:(*targetContentOffset)];   // Get index path for target row
     int numberOfRow = [self tableView:(UITableView *)scrollView numberOfRowsInSection:(NSInteger)indexPath.section];
     
-    CGRect rowRect = [self.tableView rectForRowAtIndexPath:indexPath];
-    CGRect targetRect = rowRect;
-    CGPoint origin = targetRect.origin;
-    if (self.centering){
-        
-        origin.y -= (self.tableView.bounds.size.height * 0.5 - targetRect.size.height * 0.5);
-        
-    }
+    /* Find closest row at *targetContentOffset */
+    
+    // Row at *targetContentOffset
+    CGRect rowRect      = [self.tableView rectForRowAtIndexPath:indexPath];
 
-    if (row <= numberOfRow - 1 ){
-        NSIndexPath *nextPath = [NSIndexPath indexPathForRow: row + 1 inSection: indexPath.section];
-        CGRect nextRowRect = [self.tableView rectForRowAtIndexPath: nextPath];
+    // temporary assign
+    selectedIndexPath = indexPath;
+    CGRect targetRect   = rowRect;
+
+
+    // Next Row
+    if (indexPath.row < numberOfRow - 1 ){
+        NSIndexPath *nextPath   = [NSIndexPath indexPathForRow: indexPath.row + 1 inSection: indexPath.section];
+        CGRect nextRowRect      = [self.tableView rectForRowAtIndexPath: nextPath];
         
-        if (fabs(offset.y - nextRowRect.origin.y) < fabs(offset.y - origin.y)){
-                                      targetRect = nextRowRect;
-            selectedIndexPath = nextPath;
+        // Compare distance
+        // if next row is closer, set target rect 
+        if (fabs(offset.y - CGRectGetMinY(nextRowRect)) < fabs(offset.y - CGRectGetMinY(rowRect))){
+            targetRect          = nextRowRect;
+            selectedIndexPath   = nextPath;
         }
     }
     
-    origin = targetRect.origin;
+    /* Centering */ 
+    offset = targetRect.origin;
     if (self.centering){
-        origin.y -= (self.tableView.bounds.size.height * 0.5 - targetRect.size.height * 0.5);
+        offset.y -= (self.tableView.bounds.size.height * 0.5 - targetRect.size.height * 0.5);
     }
-    NSLog(NSStringFromCGPoint(origin));
     
-    (*targetContentOffset) = origin;
-    
-    [self.tableView selectRowAtIndexPath: selectedIndexPath animated: YES scrollPosition:UITableViewScrollPositionNone];
-    
+    // Assign return value
+    (*targetContentOffset) = offset;
+   
+    // Snap speed
+    // it seems it's better set it slow when the distance of target offset and current offset is small to avoid abrupt jumps
+    float currentOffset = self.tableView.contentOffset.y;
+    float rowH = targetRect.size.height;
+    static const float thresholdDistanceCoef  = 0.25;
+    if (fabs(currentOffset - (*targetContentOffset).y) > rowH * thresholdDistanceCoef){
+        self.tableView.decelerationRate = UIScrollViewDecelerationRateFast;
+    } else {
+        self.tableView.decelerationRate = UIScrollViewDecelerationRateNormal;
+    }
 }
 
+// Indicate the selected row - for the demonstration purpose
+- (void) scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self.tableView selectRowAtIndexPath: selectedIndexPath animated: YES scrollPosition:UITableViewScrollPositionNone];
+}
 
+#pragma mark
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 1; // arbitrary number for this sample project
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 30;
+    return 30;// arbitrary number for this sample project
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 300; // arbitrary number for this sample project
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -98,18 +118,6 @@
     // Configure the cell...
     cell.textLabel.text = [NSString stringWithFormat:@"Cell %d", indexPath.row];
     return cell;
-}
-
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 300;
-}
-
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
 }
 
 @end

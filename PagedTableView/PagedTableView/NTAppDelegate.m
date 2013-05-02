@@ -9,15 +9,17 @@
 #import "NTAppDelegate.h"
 
 #import "NTPagedTableViewController.h"
+#import "NTViewController.h"
 
 @implementation NTAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-//    self.viewController = [[NTPagedTableViewController alloc] init];
-    self.viewController = [[NTPagedTableViewController alloc] initWithStyle: UITableViewStylePlain];
+    
+    NTViewController *viewCtl = [[NTViewController alloc] initWithNibName: @"NTViewController" bundle:nil];
+    UINavigationController *naviCtl = [[UINavigationController alloc] initWithRootViewController: viewCtl];
+    self.viewController = naviCtl;
     self.window.rootViewController = _viewController;
     [self.window makeKeyAndVisible];
     return YES;

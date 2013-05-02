@@ -17,6 +17,8 @@
 		350E1F841731296100FF49B9 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 350E1F831731296100FF49B9 /* Default@2x.png */; };
 		350E1F861731296100FF49B9 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 350E1F851731296100FF49B9 /* Default-568h@2x.png */; };
 		350E1F941731298200FF49B9 /* NTPagedTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 350E1F931731298200FF49B9 /* NTPagedTableViewController.m */; };
+		350F9AA7173208A300D6BB58 /* NTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 350F9AA5173208A300D6BB58 /* NTViewController.m */; };
+		350F9AA8173208A300D6BB58 /* NTViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 350F9AA6173208A300D6BB58 /* NTViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +37,9 @@
 		350E1F851731296100FF49B9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		350E1F921731298200FF49B9 /* NTPagedTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTPagedTableViewController.h; sourceTree = "<group>"; };
 		350E1F931731298200FF49B9 /* NTPagedTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NTPagedTableViewController.m; sourceTree = "<group>"; };
+		350F9AA4173208A300D6BB58 /* NTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTViewController.h; sourceTree = "<group>"; };
+		350F9AA5173208A300D6BB58 /* NTViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NTViewController.m; sourceTree = "<group>"; };
+		350F9AA6173208A300D6BB58 /* NTViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NTViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +88,9 @@
 			children = (
 				350E1F7E1731296100FF49B9 /* NTAppDelegate.h */,
 				350E1F7F1731296100FF49B9 /* NTAppDelegate.m */,
+				350F9AA4173208A300D6BB58 /* NTViewController.h */,
+				350F9AA5173208A300D6BB58 /* NTViewController.m */,
+				350F9AA6173208A300D6BB58 /* NTViewController.xib */,
 				350E1F921731298200FF49B9 /* NTPagedTableViewController.h */,
 				350E1F931731298200FF49B9 /* NTPagedTableViewController.m */,
 				350E1F761731296100FF49B9 /* Supporting Files */,
@@ -160,6 +168,7 @@
 				350E1F821731296100FF49B9 /* Default.png in Resources */,
 				350E1F841731296100FF49B9 /* Default@2x.png in Resources */,
 				350E1F861731296100FF49B9 /* Default-568h@2x.png in Resources */,
+				350F9AA8173208A300D6BB58 /* NTViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,6 +182,7 @@
 				350E1F7C1731296100FF49B9 /* main.m in Sources */,
 				350E1F801731296100FF49B9 /* NTAppDelegate.m in Sources */,
 				350E1F941731298200FF49B9 /* NTPagedTableViewController.m in Sources */,
+				350F9AA7173208A300D6BB58 /* NTViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,6 +262,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PagedTableView/PagedTableView-Prefix.pch";
 				INFOPLIST_FILE = "PagedTableView/PagedTableView-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -263,6 +274,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PagedTableView/PagedTableView-Prefix.pch";
 				INFOPLIST_FILE = "PagedTableView/PagedTableView-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -287,6 +299,7 @@
 				350E1F911731296100FF49B9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
